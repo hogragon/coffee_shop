@@ -12,10 +12,12 @@ and open the template in the editor.
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Add Person</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="<c:url value='/resources/js/frontendController.js'/>"></script>
 </head>
 
 <body>
-	<form action="/person/create" method="post">
+	<form id="formAddPerson" onSubmit="addPerson();" method="POST">
 		<table>
 			<tr>
 				<td>First Name:</td>

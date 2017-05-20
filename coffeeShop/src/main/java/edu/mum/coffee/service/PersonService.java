@@ -1,6 +1,7 @@
 package edu.mum.coffee.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,20 +16,23 @@ public class PersonService {
 	@Autowired
 	private PersonRepository personRepository;
 
-	@Transactional
-	public void savePerson(Person person) {
-		personRepository.save(person);
+	public Person savePerson(Person person) {
+		return personRepository.save(person);
 	}
-	@Transactional
-	public Person findByEmail(String email){
+
+	public List<Person> findByEmail(String email) {
 		return personRepository.findByEmail(email);
 	}
-	@Transactional
-	public Person findById(Long id){
+
+	public Person findById(Long id) {
 		return personRepository.findOne(id);
 	}
-	@Transactional
+
+	public void removePerson(Person person) {
+		personRepository.delete(person);
+	}
 	public List<Person> getAll(){
                 return personRepository.findAll();
 	}
+
 }

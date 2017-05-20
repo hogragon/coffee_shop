@@ -1,6 +1,7 @@
 package edu.mum.coffee.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -34,16 +35,8 @@ public class Order {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public List<Orderline> getOrderLines() {
-		return orderLines;
-	}
-
-	public void setOrderLines(List<Orderline> orderLines) {
-		this.orderLines = orderLines;
+		return Collections.unmodifiableList(orderLines);
 	}
 
 	public Person getPerson() {
@@ -79,16 +72,21 @@ public class Order {
 		return totalAmount;
 	}
 
-	public List<Orderline> getOrderLine() {
-		return orderLines;
+	public void addOrderLine(Orderline orderLine) {
+		orderLine.setOrder(this);
+		this.orderLines.add(orderLine);
 	}
 
-	public void setOrderLine(List<Orderline> orderLine) {
-		this.orderLines = orderLine;
+	public void removeOrderLine(Orderline orderLine) {
+		this.orderLines.remove(orderLine);
+		orderLine.setOrder(null);
 	}
 
-	public void addOrderLine(Orderline ol) {
-		this.orderLines.add(ol);
+	public void clearOrderLines() {
+		for (Orderline orderline : orderLines) {
+			orderline.setOrder(null);
+		}
+		orderLines.clear();
 	}
 
 }

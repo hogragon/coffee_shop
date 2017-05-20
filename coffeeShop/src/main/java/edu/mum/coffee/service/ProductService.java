@@ -17,10 +17,6 @@ public class ProductService   {
 	@Autowired
 	private ProductRepository productRepository;
 		
-	public void setProductRepository(ProductRepository productRepository) {
-		this.productRepository = productRepository;
-	}
-
 	public Product save(Product product) {
 		return productRepository.save(product);
 	}
@@ -37,8 +33,11 @@ public class ProductService   {
 		return  productRepository.findAll() ;
 	}
 	
-	public List<Product> searchProducts(String criteria) {
-		 return productRepository.findByProductNameOrDescriptionAllIgnoreCase(criteria, criteria);
+	public List<Product> findByTextSearch(String criteria) {
+		if (!criteria.contains("%")) {
+			criteria = "%"+criteria+"%";
+		}
+		return productRepository.findByProductNameLikeOrDescriptionLikeAllIgnoreCase(criteria, criteria);
 	}
 
 	public List<Product> findByPrice(double minPrice, double maxPrice) {
@@ -49,7 +48,4 @@ public class ProductService   {
 		 return productRepository.findByProductType(productType);
 	}
 	
-	public Product findById(int id){
-		return productRepository.findOne(id);
-	}
 }

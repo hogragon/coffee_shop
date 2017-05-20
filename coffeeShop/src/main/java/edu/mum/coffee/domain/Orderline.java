@@ -19,7 +19,6 @@ public class Orderline {
 	private Product product;
 	@ManyToOne
 	private Order order;
-	private double price;
 
 	public int getQuantity() {
 		return quantity;
@@ -46,15 +45,11 @@ public class Orderline {
 	}
 
 	public double getSubtotal() {
-		return this.quantity * this.price;
+		return quantity * product.getPrice();
 	}
 
 	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = product.getPrice();
+		return product.getPrice();
 	}
 
 }
