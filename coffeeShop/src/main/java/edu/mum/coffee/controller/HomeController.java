@@ -10,6 +10,11 @@ public class HomeController {
 	public String homePage() {
 		return "home";
 	}
+        
+        @GetMapping("/createPerson")
+	public String addPersonPage() {
+		return "addPerson";
+	}
 
 	@GetMapping({"/secure"})
 	public String securePage() {

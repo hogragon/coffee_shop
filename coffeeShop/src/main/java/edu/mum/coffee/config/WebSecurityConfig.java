@@ -1,5 +1,6 @@
 package edu.mum.coffee.config;
 
+import edu.mum.coffee.controller.RestURIConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,7 +16,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/home", "/index").permitAll()
+                .antMatchers("/", "/home", "/index",RestURIConstant.PERSON_LIST).permitAll()
+                .antMatchers("/person/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

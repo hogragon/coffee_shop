@@ -10,8 +10,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>You are in!</title>
 </head>
-<body><h1>You made it!</h1>
-<a href="<c:url value="/logout" />"> Now logout </a>
+<body>
+    <h1>You made it!</h1>
+    <a href="<c:url value="/createPerson" />"> Add Person </a><br>
+    <a href="<c:url value="/logout" />"> Now logout </a>
 
 </body>
 </html>
