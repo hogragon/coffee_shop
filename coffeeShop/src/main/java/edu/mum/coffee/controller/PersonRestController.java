@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,6 +39,18 @@ public class PersonRestController {
     @PostMapping(RestURIConstant.PERSON_CREATE)
     public ResponseEntity createPerson(@ModelAttribute Person p){
         personService.savePerson(p);
+        return new ResponseEntity(p,HttpStatus.OK);
+    }
+    
+    @PostMapping(RestURIConstant.PERSON_UPDATE)
+    public ResponseEntity updatePerson(@ModelAttribute Person p){
+        personService.savePerson(p);
+        return new ResponseEntity(p,HttpStatus.OK);
+    }
+    
+    @GetMapping(RestURIConstant.PERSON_FIND)
+    public ResponseEntity findPerson(@PathVariable long id){
+        Person p = personService.findById(id);
         return new ResponseEntity(p,HttpStatus.OK);
     }
 }

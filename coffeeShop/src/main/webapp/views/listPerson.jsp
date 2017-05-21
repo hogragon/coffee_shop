@@ -21,7 +21,7 @@
 		<td>${p.email}</td>
 		<td>${p.phone}</td>
                 <td>${p.address.city},${p.address.state},${p.address.country},${p.address.zipcode}</td>
-		<td><a href="person/${p.id}">Edit</a></td>
+		<td><a href="/detailPerson/${p.id}">Edit</a></td>
 	</tr>
 	</c:forEach>
 	</table>
