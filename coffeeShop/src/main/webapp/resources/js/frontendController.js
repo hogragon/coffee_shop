@@ -63,6 +63,14 @@ function addPerson(){
     return false;
 }
 
+function updatePerson(){
+    
+    $.post("/person/private/update",$("#formUpdatePerson").serialize())
+            .done(onCompleteGetData)
+            .error(onError);
+    return false;
+}
+
 $("document").ready(function(){
 //    $("#formAddPerson").submit(function(e){
 //        addPerson();

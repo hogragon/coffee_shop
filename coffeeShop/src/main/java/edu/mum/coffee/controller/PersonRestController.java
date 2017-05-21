@@ -12,11 +12,11 @@ import edu.mum.coffee.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -43,8 +43,16 @@ public class PersonRestController {
     }
     
     @PostMapping(RestURIConstant.PERSON_UPDATE)
-    public ResponseEntity updatePerson(@ModelAttribute Person p){
-        personService.savePerson(p);
+    public ResponseEntity updatePerson(@RequestParam("id") long id,@ModelAttribute Person p){
+        
+        Person updated  = personService.findById(id);
+        updated.setAddress(p.getAddress());
+        updated.setFirstName(p.getFirstName());
+        updated.setLastName(p.getLastName());
+        updated.setEmail(p.getEmail());
+        updated.setPhone(p.getPhone());
+        personService.savePerson(updated);
+        
         return new ResponseEntity(p,HttpStatus.OK);
     }
     
