@@ -13,6 +13,7 @@
 <body>
     <h1>You made it!</h1>
     <a href="<c:url value="/createPerson" />"> Add Person </a><br>
+    <a href="<c:url value="/allPeople" />"> List People </a><br>
     <a href="<c:url value="/logout" />"> Now logout </a>
 
 </body>
