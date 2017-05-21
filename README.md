@@ -5,6 +5,7 @@ This project for studying web application architecture in university, in this pr
 * IDE: NetBean
 * Spring Web MVC Framework
 * Spring Boot
+* Spring Security
 * RestTemplate
 * HttpEntity
 * Jackson
