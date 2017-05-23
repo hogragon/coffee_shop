@@ -9,23 +9,24 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>People List</title>
+        <title>Product list</title>
     </head>
     <body>
         <h1>Coffee shop people</h1>
 	<table>
-	<c:forEach var="p" items="${people}">
+	<c:forEach var="p" items="${products}">
 	<tr>
-		<td>${p.firstName}</td>
-		<td>${p.lastName}</td>
-		<td>${p.email}</td>
-		<td>${p.phone}</td>
-                <td>${p.address.city},${p.address.state},${p.address.country},${p.address.zipcode}</td>
+		<td>${p.productName}</td>
+		<td>${p.description}</td>
+		<td>${p.price}</td>
+		<td>${p.productType}</td>               
 		<td><a href="/detailPerson/${p.id}">Edit</a></td>
+                <td><a href="/detailPerson/${p.id}">Delete</a></td>
 	</tr>
 	</c:forEach>
 	</table>
 	
-	<a href="/createPerson"> Add a new person</a>
+	<a href="/addProduct"> Add a new product</a> <br>
+        <a href="/secure"> Home</a>
     </body>
 </html>

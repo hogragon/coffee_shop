@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         webSecurity
             .ignoring()
                 // All of Spring Security will ignore the requests
-                .antMatchers("/person/public/**");
+                .antMatchers("/person/public/**","/product/public/**");
                 
     }
 	@Override
@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/", "/home", "/index").permitAll()
                 .antMatchers("/person/private/**").hasRole("ADMIN")
+                .antMatchers("/product/private/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
