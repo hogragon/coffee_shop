@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -127,27 +128,10 @@ public class HomeController {
             return "redirect:/allProduct";
 	}
         
-        @RequestMapping("/removeProduct/{id}")
-	public String removeProduct(@PathVariable long id,HttpEntity<String>request){
-            
-            
-              
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-            MultiValueMap<String, String> body = new LinkedMultiValueMap<>();     
-//
-            body.add("id", ""+id);
-//
-//            // Note the body object as first parameter!
-            HttpEntity<MultiValueMap<String,String>> httpEntity = new HttpEntity<>(body, request.getHeaders());
-            System.out.println("Header="+httpEntity.getHeaders().toString());
-            System.out.println("Body="+httpEntity.getBody());
+        @PostMapping("/removeProduct")
+	public String removeProduct(HttpEntity<String>request){
             RestTemplate restTemplate = new RestTemplate();
-//            restTemplate.exchange(WEB_SERVICE_URL+RestURIConstant.PRODUCT_DELETE, HttpMethod.POST, request, Product.class);
-            
-            String result = restTemplate.getForObject(WEB_SERVICE_URL+"/product/public/delete/"+id, String.class);
-
-            System.out.println(result);
+            restTemplate.postForObject(WEB_SERVICE_URL+RestURIConstant.PRODUCT_DELETE,request, String.class);
             return "redirect:/allProduct";
 	}
 }

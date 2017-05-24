@@ -52,8 +52,8 @@ public class ProductRestController {
         return new ResponseEntity(p,HttpStatus.OK);
     }
     
-    @GetMapping(RestURIConstant.PRODUCT_DELETE)
-    public ResponseEntity deleteProduct(@PathVariable("id") int id){
+    @PostMapping(RestURIConstant.PRODUCT_DELETE)
+    public ResponseEntity deleteProduct(@RequestParam("id") int id){
         Product deleted  = productServices.getProduct(id);
         productServices.delete(deleted);
         return new ResponseEntity(deleted,HttpStatus.OK);

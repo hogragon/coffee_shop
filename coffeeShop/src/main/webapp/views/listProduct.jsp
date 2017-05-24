@@ -10,9 +10,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Product list</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="<c:url value='/resources/js/frontendController.js'/>"></script>
     </head>
     <body>
         <h1>Coffee shop people</h1>
+        <form id="formRemoveProduct" action="/removeProduct" method="POST">
+            <input type="hidden" id="productId" name="id"/>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
 	<table>
 	<c:forEach var="p" items="${products}">
 	<tr>
@@ -21,7 +27,7 @@
 		<td>${p.price}</td>
 		<td>${p.productType}</td>               
 		<td><a href="/detailProduct/${p.id}">Edit</a></td>
-                <td><a href="/removeProduct/${p.id}">Delete</a></td>
+                <td><a href="#" onclick="removeProduct(${p.id});">Delete</a></td>
 	</tr>
 	</c:forEach>
 	</table>

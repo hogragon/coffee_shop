@@ -4,48 +4,48 @@
  * and open the template in the editor.
  */
 
-var sendRequest = function (url, verb, data, successCallback, errorCallback, options) 
-{
-    var requestOptions = options || {};
-    requestOptions.type = verb;
-    requestOptions.success = successCallback;
-    requestOptions.processData = false;
-    requestOptions.error = errorCallback;    
-    requestOptions.dataType  = "text";    
-    requestOptions.headers  = { "content-Type" : "application/json" }; 
-
-    var dataToSend = JSON.parse(data);
-//        dataToSend['session_id'] = this.session;
-    dataToSend = JSON.stringify(dataToSend);
-
-    if (!url || !verb) 
-    {
-        errorCallback(401, "URL and HTTP verb required");
-    }
-    if (dataToSend) 
-    {   
-        requestOptions.data = dataToSend;
-    }
-
-    $.ajax(url, requestOptions);
-};
-
-var sendFormRequest = function (url, verb, data, successCallback, errorCallback, options) 
-{
-    var requestOptions = options || {};
-    requestOptions.type = "POST";
-    requestOptions.success = successCallback;
-    requestOptions.error = errorCallback;    
-    requestOptions.data = data;
-
-    if (!url || !verb) 
-    {
-        errorCallback(401, "URL and HTTP verb required");
-    }
-    
-
-    $.ajax(url, requestOptions);
-};
+//var sendRequest = function (url, verb, data, successCallback, errorCallback, options) 
+//{
+//    var requestOptions = options || {};
+//    requestOptions.type = verb;
+//    requestOptions.success = successCallback;
+//    requestOptions.processData = false;
+//    requestOptions.error = errorCallback;    
+//    requestOptions.dataType  = "text";    
+//    requestOptions.headers  = { "content-Type" : "application/json" }; 
+//
+//    var dataToSend = JSON.parse(data);
+////        dataToSend['session_id'] = this.session;
+//    dataToSend = JSON.stringify(dataToSend);
+//
+//    if (!url || !verb) 
+//    {
+//        errorCallback(401, "URL and HTTP verb required");
+//    }
+//    if (dataToSend) 
+//    {   
+//        requestOptions.data = dataToSend;
+//    }
+//
+//    $.ajax(url, requestOptions);
+//};
+//
+//var sendFormRequest = function (url, verb, data, successCallback, errorCallback, options) 
+//{
+//    var requestOptions = options || {};
+//    requestOptions.type = "POST";
+//    requestOptions.success = successCallback;
+//    requestOptions.error = errorCallback;    
+//    requestOptions.data = data;
+//
+//    if (!url || !verb) 
+//    {
+//        errorCallback(401, "URL and HTTP verb required");
+//    }
+//    
+//
+//    $.ajax(url, requestOptions);
+//};
 
 var onCompleteGetData = function(data){
     console.log(data);
@@ -71,12 +71,14 @@ function updatePerson(){
     return false;
 }
 
-$("document").ready(function(){
-//    $("#formAddPerson").submit(function(e){
-//        addPerson();
-//        e.preventDefault();
-//    });
-});
+function removeProduct(productId){
+    $("#productId").val(productId);
+    $("#formRemoveProduct").submit();
+}
+
+//$("document").ready(function(){
+//
+//});
 
 
 
