@@ -26,6 +26,7 @@
 	</c:forEach>
 	</table>
 	
-	<a href="/createPerson"> Add a new person</a>
+	<a href="/createPerson"> Add a new person</a><br>
+        <a href="/secure"> Home</a>
     </body>
 </html>

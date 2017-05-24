@@ -10,4 +10,5 @@ This project for studying web application architecture in university, in this pr
 * HttpEntity
 * Jackson
 ## Features: ##
-* Create, update, list Person objects
+* Create, update, list of Person
+* Create, update, delete, list of Product

@@ -87,7 +87,7 @@ public class HomeController {
             
             for(ProductType t:ProductType.values()){
                 mapType.put(t.name(), t.name());
-            }
+            }            
             return mapType;
 	}
         
@@ -99,5 +99,23 @@ public class HomeController {
             List<Product> product = mapper.readValue(result, mapper.getTypeFactory().constructCollectionType(List.class, Product.class));
             model.addAttribute("products", product);
             return "listProduct";
+	}
+        
+        @GetMapping("/detailProduct/{id}")
+	public String updateProductPage(@PathVariable long id,Model model) throws IOException {
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForObject(WEB_SERVICE_URL+"/product/public/"+id, String.class);
+            System.out.println("PRODUCT DETAIL: "+result);
+            ObjectMapper mapper = new ObjectMapper();
+            Product p = mapper.readValue(result, Product.class);
+            model.addAttribute("product", p);
+            return "editProduct";
+	}
+        
+        @PostMapping("/updateProduct")
+	public String updateProduct(HttpEntity<String> requestEntity){
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.postForObject(WEB_SERVICE_URL+RestURIConstant.PRODUCT_UPDATE, requestEntity,Product.class);
+            return "redirect:/allProduct";
 	}
 }

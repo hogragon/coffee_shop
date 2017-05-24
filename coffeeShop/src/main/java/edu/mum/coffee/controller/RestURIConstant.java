@@ -19,8 +19,8 @@ public class RestURIConstant {
     public static final String PERSON_FIND =  "/person/public/{id}";
     public static final String PRODUCT_CREATE =  "/product/private/create";
     public static final String PRODUCT_LIST =  "/product/public/all";
-    public static final String PRODUCT_UPDATE =  "/product/private/update/{id}";
-    public static final String PRODUCT_DELETE =  "/product/private/delete/{id}";
+    public static final String PRODUCT_UPDATE =  "/product/private/update";
+    public static final String PRODUCT_DELETE =  "/product/private/delete";
     public static final String PRODUCT_FIND =  "/product/public/{id}";
     public static final String PRODUCT_FIND_BY_TYPE =  "/product/public/{type}";
 }

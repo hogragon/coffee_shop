@@ -33,13 +33,13 @@ public class ProductRestController {
     }
     
     @PostMapping(RestURIConstant.PRODUCT_CREATE)
-    public ResponseEntity createPerson(@ModelAttribute Product p){
+    public ResponseEntity createProduct(@ModelAttribute Product p){
         productServices.save(p);
         return new ResponseEntity(p,HttpStatus.OK);
     }
     
     @PostMapping(RestURIConstant.PRODUCT_UPDATE)
-    public ResponseEntity updatePerson(@RequestParam("id") int id,@ModelAttribute Product p){
+    public ResponseEntity updateProduct(@RequestParam("id") int id,@ModelAttribute Product p){
         
         Product updated  = productServices.getProduct(id);
         updated.setDescription(p.getDescription());
@@ -52,11 +52,11 @@ public class ProductRestController {
         return new ResponseEntity(p,HttpStatus.OK);
     }
     
-    @GetMapping(RestURIConstant.PRODUCT_FIND_BY_TYPE)
-    public ResponseEntity findProductByType(@PathVariable int type){
-        ProductType t = ProductType.values()[type];
-        return new ResponseEntity(productServices.findByProductType(t),HttpStatus.OK);
-    }
+//    @GetMapping(RestURIConstant.PRODUCT_FIND_BY_TYPE)
+//    public ResponseEntity findProductByType(@PathVariable int type){
+//        ProductType t = ProductType.values()[type];
+//        return new ResponseEntity(productServices.findByProductType(t),HttpStatus.OK);
+//    }
     
     @GetMapping(RestURIConstant.PRODUCT_FIND)
     public ResponseEntity findProduct(@PathVariable int id){
