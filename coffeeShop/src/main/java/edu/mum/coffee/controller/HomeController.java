@@ -9,15 +9,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
+
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
+
 
 @Controller
 public class HomeController {
@@ -116,6 +124,30 @@ public class HomeController {
 	public String updateProduct(HttpEntity<String> requestEntity){
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.postForObject(WEB_SERVICE_URL+RestURIConstant.PRODUCT_UPDATE, requestEntity,Product.class);
+            return "redirect:/allProduct";
+	}
+        
+        @RequestMapping("/removeProduct/{id}")
+	public String removeProduct(@PathVariable long id,HttpEntity<String>request){
+            
+            
+              
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            MultiValueMap<String, String> body = new LinkedMultiValueMap<>();     
+//
+            body.add("id", ""+id);
+//
+//            // Note the body object as first parameter!
+            HttpEntity<MultiValueMap<String,String>> httpEntity = new HttpEntity<>(body, request.getHeaders());
+            System.out.println("Header="+httpEntity.getHeaders().toString());
+            System.out.println("Body="+httpEntity.getBody());
+            RestTemplate restTemplate = new RestTemplate();
+//            restTemplate.exchange(WEB_SERVICE_URL+RestURIConstant.PRODUCT_DELETE, HttpMethod.POST, request, Product.class);
+            
+            String result = restTemplate.getForObject(WEB_SERVICE_URL+"/product/public/delete/"+id, String.class);
+
+            System.out.println(result);
             return "redirect:/allProduct";
 	}
 }

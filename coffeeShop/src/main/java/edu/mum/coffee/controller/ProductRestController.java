@@ -52,6 +52,13 @@ public class ProductRestController {
         return new ResponseEntity(p,HttpStatus.OK);
     }
     
+    @GetMapping(RestURIConstant.PRODUCT_DELETE)
+    public ResponseEntity deleteProduct(@PathVariable("id") int id){
+        Product deleted  = productServices.getProduct(id);
+        productServices.delete(deleted);
+        return new ResponseEntity(deleted,HttpStatus.OK);
+    }
+    
 //    @GetMapping(RestURIConstant.PRODUCT_FIND_BY_TYPE)
 //    public ResponseEntity findProductByType(@PathVariable int type){
 //        ProductType t = ProductType.values()[type];
