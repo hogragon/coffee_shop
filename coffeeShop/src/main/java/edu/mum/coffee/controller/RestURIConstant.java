@@ -12,7 +12,9 @@ package edu.mum.coffee.controller;
 public class RestURIConstant {
     public static final String ORDER_CREATE =  "/order/create";
     public static final String ORDER_LIST =  "/order/all";
+    public static final String ORDER_LINE_CREATE =  "/orderline/create";
     public static final String PERSON_CREATE =  "/person/create";
+    public static final String PERSON_RIGISTER =  "/person/public/register";
     public static final String PERSON_ALL =  "/person/public/all";
     public static final String PERSON_LIST =  "/person/private/list";
     public static final String PERSON_UPDATE =  "/person/private/update";

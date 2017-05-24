@@ -36,7 +36,7 @@ public class PersonRestController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
     
-    @PostMapping(RestURIConstant.PERSON_CREATE)
+    @PostMapping({RestURIConstant.PERSON_CREATE,RestURIConstant.PERSON_RIGISTER})
     public ResponseEntity createPerson(@ModelAttribute Person p){
         personService.savePerson(p);
         return new ResponseEntity(p,HttpStatus.OK);

@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,10 @@ import org.springframework.web.client.RestTemplate;
 
 @Controller
 public class HomeController {
+    
+        @Autowired
+        private SecurityShop securityShopService;
+        
         private final String WEB_SERVICE_URL = "http://localhost:8080";
     
 	@GetMapping({"/", "/index", "/home"})
@@ -41,6 +47,8 @@ public class HomeController {
 	public String addPersonPage() {
             return "addPerson";
 	}
+        
+        
         
         @GetMapping("/allPeople")
 	public String peoplePage(Model model) throws IOException {
@@ -60,6 +68,19 @@ public class HomeController {
             Person p = mapper.readValue(result, Person.class);
             model.addAttribute("person", p);
             return "editPerson";
+	}
+        
+        @RequestMapping("/registerUser")
+        public String registerUserPage(){
+            return "registerUser";
+        }
+        
+        @PostMapping("/createNewUser")
+	public String createProduct(@RequestParam("password") String password,HttpEntity<String> requestEntity) {
+            RestTemplate restTemplate = new RestTemplate();
+            Person p = restTemplate.postForObject(WEB_SERVICE_URL+RestURIConstant.PERSON_RIGISTER, requestEntity,Person.class);
+            securityShopService.RegisterNewCustomer(p, password);
+            return "createOrder";
 	}
         
         

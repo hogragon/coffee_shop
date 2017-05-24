@@ -14,7 +14,7 @@
         <script src="<c:url value='/resources/js/frontendController.js'/>"></script>
     </head>
     <body>
-        <h1>Coffee shop people</h1>
+        <h1>Coffee shop products</h1>
         <form id="formRemoveProduct" action="/removeProduct" method="POST">
             <input type="hidden" id="productId" name="id"/>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
