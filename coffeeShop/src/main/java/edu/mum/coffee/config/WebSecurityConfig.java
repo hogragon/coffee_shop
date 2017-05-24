@@ -34,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .formLogin()
             	.permitAll()
+                .successHandler(new LoginSuccessHandler())
             	.and()
             .logout()
             	.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -43,15 +44,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("super").password("pw").roles("ADMIN");
+//		auth.inMemoryAuthentication().withUser("super").password("pw").roles("ADMIN");
                 auth.userDetailsService(inMemoryUserDetailsManager());
 	}
         
         @Bean
         public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
             final Properties users = new Properties();
-            users.put("user","pass,ROLE_USER,enabled"); //add whatever other user you need
+            users.put("super","pw,ADMIN,enabled"); //add whatever other user you need
             return new InMemoryUserDetailsManager(users);
         }
+        
+        
 
 }

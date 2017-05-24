@@ -33,6 +33,7 @@ public class SecurityShop {
     
     public void RegisterNewCustomer(Person p,String password){
         List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         UserDetails user = new User(p.getEmail(),password,authorities);
         inMemoryUserDetailsManager.createUser(user);
     }

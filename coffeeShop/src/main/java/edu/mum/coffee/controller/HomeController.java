@@ -80,9 +80,13 @@ public class HomeController {
             RestTemplate restTemplate = new RestTemplate();
             Person p = restTemplate.postForObject(WEB_SERVICE_URL+RestURIConstant.PERSON_RIGISTER, requestEntity,Person.class);
             securityShopService.RegisterNewCustomer(p, password);
-            return "createOrder";
+            return "redirect:/placeOrder";
 	}
         
+        @RequestMapping("/placeOrder")
+        public String placeOrder(){
+            return "createOrder";
+        }
         
         //This method received post request and forward it to REST
         //after receiving the result from REST, it will redirect to a web page

@@ -22,7 +22,7 @@ and open the template in the editor.
 		<table>
 			<tr>
 				<td>Date</td>
-				<td><form:input type="date" name="orderDate" /></td>
+				<td><input type="date" name="orderDate" /></td>
 			</tr>
 			<tr>
 				<td>Customer:</td>
