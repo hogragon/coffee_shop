@@ -78,6 +78,26 @@ public class OrderRestController {
         return order.getId();
     }
     
+    @PostMapping(RestURIConstant.ORDER_UPDATE)
+    public int updateOrder(
+            @RequestParam("id") String id,
+            @RequestParam("productId") int productId,
+            @RequestParam("quantity") int quantity) 
+            throws ParseException
+    {
+        Order order = orderService.findById(Integer.parseInt(id));
+            
+        Product product = productService.getProduct(productId);
+        Orderline line = new Orderline();
+        line.setProduct(product);
+        line.setQuantity(quantity);
+        order.addOrderLine(line);
+            
+        orderService.save(order);
+        
+        return order.getId();
+    }
+    
     @RequestMapping(RestURIConstant.ORDER_FIND)
     public ResponseEntity findOrder(@PathVariable int id){
         Order order = orderService.findById(id);
@@ -87,7 +107,7 @@ public class OrderRestController {
         os.setOrderDate(order.getOrderDate());
         os.getCustomer().setEmail(order.getPerson().getEmail());
         os.getCustomer().setId((int) order.getPerson().getId());
-        
+        os.setTotalAmount(order.getTotalAmount());
         
         for(Orderline l:order.getOrderLines()){
             OrderLineItem line = new OrderLineItem();
@@ -101,5 +121,11 @@ public class OrderRestController {
         return new ResponseEntity(os,HttpStatus.OK);
     }
     
-    
+    @PostMapping(RestURIConstant.ORDER_DELETE)
+    public ResponseEntity deleteOrder(@RequestParam("id") String id)
+    {
+        Order order = orderService.findById(Integer.parseInt(id));
+        orderService.delete(order);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

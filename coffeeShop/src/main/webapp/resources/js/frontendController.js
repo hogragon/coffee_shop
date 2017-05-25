@@ -76,6 +76,11 @@ function removeProduct(productId){
     $("#formRemoveProduct").submit();
 }
 
+function cancelOrder(){
+    $('#formPlaceOrder').attr('action', '/orderflow/cancel');
+    $("#formPlaceOrder").submit();
+}
+
 //$("document").ready(function(){
 //
 //});

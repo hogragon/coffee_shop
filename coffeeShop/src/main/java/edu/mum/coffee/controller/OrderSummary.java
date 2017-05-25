@@ -41,7 +41,9 @@ public class OrderSummary {
     private Date orderDate;
     private Customer customer = new Customer();
     private List<OrderLineItem> orderlines = new ArrayList<>();
+    private double totalAmount;
 
+    
     public int getId() {
         return id;
     }
@@ -72,6 +74,14 @@ public class OrderSummary {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
     
 }

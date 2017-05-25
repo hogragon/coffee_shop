@@ -10,11 +10,15 @@ and open the template in the editor.
 <html>
 <head>
 <title>Place Order</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
-<!--<script src="<c:url value='/resources/js/frontendController.js'/>"></script>-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--<script src="<c:url value='/resources/js/frontendController.js'/>"></script>-->
+    <script>
+        function cancelOrder(){
+            $('#formPlaceOrder').attr('action', '/orderflow/cancel');
+            $("#formPlaceOrder").submit();
+        }
+    </script>
 </head>
 
 <body>
@@ -23,12 +27,20 @@ and open the template in the editor.
 		<table>
 			<tr>
 				<td>Date</td>
-				<td><input type="date" name="orderDate"/></td>
+				<td>
+                                    <c:if test="${order!=null}">
+                                        <label>${order.orderDate}</label>
+                                    </c:if>
+                                    <c:if test="${order==null}">
+                                        <input type="date" name="orderDate" value="${order!=null?order.orderDate:''}"/>        
+                                    </c:if>
+
+                                </td>
 			</tr>
 			<tr>
 				<td>Customer:</td>
 				<td>
-                                    <input type="text" name="email" value="${customer.email}"/>
+                                    <label>${customer.email}</label>
                                     <input type="hidden" name="customerId" value="${customer.id}"/>
                                 </td>
 			</tr>
@@ -44,28 +56,34 @@ and open the template in the editor.
                                 </td>
 			</tr>
 		</table>
-                
+                <input type="hidden" name="id" value="${order.id}"/>
                 <c:if test="${order != null}">
                 <h2>DETAIL</h2>
-                <input type="hidden" name="id" value="${order.id}"/>
+                
                 <table>
+                    <tr>
+                        <td><b>Quantity</b></td>
+                        <td><b>Name</b></td>
+                        <td><b>Sub Total</b></td>
+                    </tr>
                     <c:forEach var="line" items="${order.orderlines}">
                     <tr>
-                            <td>${line.productName}</td>
                             <td>${line.quantity}</td>
+                            <td>${line.productName}</td>
                             <td>${line.subTotal}</td>
-                                           
-                            <!--<td><a href="/detailProduct/${p.id}">Edit</a></td>-->
-                            <!--<td><a href="#" onclick="removeProduct(${p.id});">Delete</a></td>-->
                     </tr>
                     </c:forEach>
                 </table>
+                <h3>Total: ${order.totalAmount}</h3>
+                <a href="#" onClick="cancelOrder();"> Cancel Order </a><br>
                 </c:if>
                
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		<!--<input type="submit" />-->
 
 	</form>
-        <a href="<c:url value="/allOrder" />"> List Order </a><br>
+        
+        <a href="<c:url value="/" />"> Check Out </a><br>
+        
 </body>
 </html>
