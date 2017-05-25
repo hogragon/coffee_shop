@@ -84,6 +84,7 @@ and open the template in the editor.
 	</form>
         
         <a href="<c:url value="/logout" />"> Check Out </a><br>
+        <a href="<c:url value="/detailPerson/${customer.id}" />"> Edit Profile </a><br>
         
 </body>
 </html>
