@@ -37,7 +37,12 @@ public class HomeController {
         private final String WEB_SERVICE_URL = CommonConstant.WEB_SERVICE_URL;
     
 	@GetMapping({"/", "/index", "/home"})
-	public String homePage() {
+	public String homePage(Model model) throws IOException {
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForObject(WEB_SERVICE_URL+RestURIConstant.PRODUCT_LIST, String.class);
+            ObjectMapper mapper = new ObjectMapper();
+            List<Product> product = mapper.readValue(result, mapper.getTypeFactory().constructCollectionType(List.class, Product.class));
+            model.addAttribute("products", product);
             return "home";
 	}
         

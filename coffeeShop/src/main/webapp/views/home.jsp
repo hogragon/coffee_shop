@@ -19,5 +19,22 @@
 	<p>
 		<a href="<c:url value="/secure" />"> Login Here </a><br>
                 <a href="<c:url value="/registerUser" />"> New Customer? Register Here </a>
+        <h3>MENU TODAY</h3>
+        <table>
+        <tr>
+            <td><b>Name</b></td>
+            <td><b>Description</b></td>
+            <td><b>Price</b></td>
+            <td><b>Type</b></td>
+	</tr>
+	<c:forEach var="p" items="${products}">
+	<tr>
+		<td>${p.productName}</td>
+		<td>${p.description}</td>
+		<td>${p.price}</td>
+		<td>${p.productType}</td>
+	</tr>
+	</c:forEach>
+	</table>
 </body>
 </html>
