@@ -125,7 +125,8 @@ public class OrderRestController {
     public ResponseEntity deleteOrder(@RequestParam("id") String id)
     {
         Order order = orderService.findById(Integer.parseInt(id));
+        order.clearOrderLines();
         orderService.delete(order);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(order.getId(),HttpStatus.OK);
     }
 }

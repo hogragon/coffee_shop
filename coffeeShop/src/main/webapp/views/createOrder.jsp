@@ -83,7 +83,7 @@ and open the template in the editor.
 
 	</form>
         
-        <a href="<c:url value="/" />"> Check Out </a><br>
+        <a href="<c:url value="/logout" />"> Check Out </a><br>
         
 </body>
 </html>

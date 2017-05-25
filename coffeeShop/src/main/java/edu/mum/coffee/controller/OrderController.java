@@ -7,15 +7,24 @@ package edu.mum.coffee.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.mum.coffee.config.CommonConstant;
+import edu.mum.coffee.domain.Person;
 
 import edu.mum.coffee.domain.Product;
 import java.io.IOException;
+import java.security.Principal;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,8 +42,26 @@ import org.springframework.web.client.RestTemplate;
  */
 @Controller
 public class OrderController {
+    
+    
     @RequestMapping(RestURIConstant.ORDER_FLOW_INIT)
-    public String initOrder(Model model){
+    public String initOrder(Model model) throws IOException{
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth!=null && !(auth instanceof AnonymousAuthenticationToken))
+        {
+            UserDetails user = (UserDetails)auth.getPrincipal();
+            Map<String,String> map = new HashMap<>();
+            map.put("email", user.getUsername());
+            HttpEntity entity = new HttpEntity(map);
+            
+            RestTemplate restTemplate = new RestTemplate();
+            String p = restTemplate.postForObject(CommonConstant.WEB_SERVICE_URL+RestURIConstant.PERSON_FIND_BY_EMAIL,entity,String.class);
+            ObjectMapper mapper = new ObjectMapper();
+            Person customer = mapper.readValue(p, Person.class);
+            if(customer!=null){
+                model.addAttribute("customer", customer);
+            }
+        }
         return "createOrder";
     }
     
@@ -59,8 +86,8 @@ public class OrderController {
     public String cancelOrder(@RequestParam("id") String id, HttpEntity<String> requestEntity,Model model){
         System.out.println("deleted___ORDER="+id);
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject(CommonConstant.WEB_SERVICE_URL+RestURIConstant.ORDER_DELETE,requestEntity, Integer.class);
-        
+        int orderId = restTemplate.postForObject(CommonConstant.WEB_SERVICE_URL+RestURIConstant.ORDER_DELETE,requestEntity, Integer.class);
+        System.out.println("TRY TO DELETE: "+orderId);
         return "redirect:/home";
     }
     

@@ -5,10 +5,12 @@ This project for studying web application architecture in university, in this pr
 * IDE: NetBean
 * Spring Web MVC Framework
 * Spring Boot
-* Spring Security
+* Spring Security: in Memory
 * RestTemplate
 * HttpEntity
 * Jackson
 ## Features: ##
 * Create, update, list of Person
 * Create, update, delete, list of Product
+* Create, update Order
+* Register new user
