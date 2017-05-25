@@ -16,6 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.http.HttpEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,7 +83,12 @@ public class HomeController {
         }
         
         @PostMapping("/createNewUser")
-	public String createProduct(@RequestParam("password") String password,HttpEntity<String> requestEntity,Model model) {
+	public String createProduct(@RequestParam("password") String password,@RequestParam("email") String email,HttpEntity<String> requestEntity,Model model) throws IOException {
+            
+            if(isUserExist(email)){
+                return "redirect:/logout";
+            }
+            
             RestTemplate restTemplate = new RestTemplate();
             
             //Save user data into DB
@@ -93,25 +102,19 @@ public class HomeController {
             return "forward:"+RestURIConstant.ORDER_FLOW_INIT;
 	}
         
-//        @ModelAttribute("productList")
-//        public Map<Integer,String> productList() throws IOException{
-//            RestTemplate restTemplate = new RestTemplate();
-//            String result = restTemplate.getForObject(WEB_SERVICE_URL+RestURIConstant.PRODUCT_LIST, String.class);
-//            ObjectMapper mapper = new ObjectMapper();
-//            List<Product> products = mapper.readValue(result, mapper.getTypeFactory().constructCollectionType(List.class, Product.class));
-//
-//            Map<Integer,String> mapType = new HashMap<>();
-//
-//            products.forEach((Product t) -> {
-//                mapType.put(t.getId(), t.getProductName());
-//            });            
-//            return mapType;
-//        }
-        
-//        @RequestMapping("/placeOrder")
-//        public String placeOrder(){
-//            return "createOrder";
-//        }
+        private boolean isUserExist(String email) throws IOException{
+                
+            Map<String,String> map = new HashMap<>();
+            map.put("email", email);
+            HttpEntity entity = new HttpEntity(map);
+
+            RestTemplate restTemplate = new RestTemplate();
+            String p = restTemplate.postForObject(CommonConstant.WEB_SERVICE_URL+RestURIConstant.PERSON_FIND_BY_EMAIL,entity,String.class);
+            if(p.equals(email)){
+                return false;
+            }            
+            return true;
+        }
         
         //This method received post request and forward it to REST
         //after receiving the result from REST, it will redirect to a web page
