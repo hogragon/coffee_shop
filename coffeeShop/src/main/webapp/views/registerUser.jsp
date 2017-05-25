@@ -61,6 +61,6 @@ and open the template in the editor.
 		<input type="submit" />
 
 	</form>
-        <a href="<c:url value="/allPeople" />"> List People </a><br>
+        <a href="<c:url value="/" />"> Back </a><br>
 </body>
 </html>

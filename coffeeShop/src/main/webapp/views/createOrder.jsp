@@ -18,29 +18,52 @@ and open the template in the editor.
 </head>
 
 <body>
-	<form id="formPlaceOrder" action="/placeOrder" method="POST">
+        <h1>PLACE YOUR ORDER</h1>
+	<form id="formPlaceOrder" action="/orderflow/placeOrder" method="POST">
 		<table>
 			<tr>
 				<td>Date</td>
-				<td><input type="date" name="orderDate" /></td>
+				<td><input type="date" name="orderDate"/></td>
 			</tr>
 			<tr>
 				<td>Customer:</td>
-				<td><input type="text" name="price" /></td>
+				<td>
+                                    <input type="text" name="email" value="${customer.email}"/>
+                                    <input type="hidden" name="customerId" value="${customer.id}"/>
+                                </td>
 			</tr>
 			<tr>
-				<td>Customer</td>
+				<td>Product:</td>
 				<td>
-                                    <form:select name="productType" path="productType">
+                                    <form:select name="productId" path="productList">
                                         <form:option value="NONE" label="Select"/>
-                                        <form:options items="${productType}" />
-                                     </form:select> 
+                                        <form:options items="${productList}" />
+                                    </form:select> 
+                                    <input type="text" name="quantity"/>
+                                    <input type="submit" value="Add"/>                    
                                 </td>
 			</tr>
 		</table>
+                
+                <c:if test="${order != null}">
+                <h2>DETAIL</h2>
+                <input type="hidden" name="id" value="${order.id}"/>
+                <table>
+                    <c:forEach var="line" items="${order.orderlines}">
+                    <tr>
+                            <td>${line.productName}</td>
+                            <td>${line.quantity}</td>
+                            <td>${line.subTotal}</td>
+                                           
+                            <!--<td><a href="/detailProduct/${p.id}">Edit</a></td>-->
+                            <!--<td><a href="#" onclick="removeProduct(${p.id});">Delete</a></td>-->
+                    </tr>
+                    </c:forEach>
+                </table>
+                </c:if>
                
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-		<input type="submit" />
+		<!--<input type="submit" />-->
 
 	</form>
         <a href="<c:url value="/allOrder" />"> List Order </a><br>

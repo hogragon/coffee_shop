@@ -5,6 +5,7 @@
  */
 package edu.mum.coffee.config;
 
+import edu.mum.coffee.controller.RestURIConstant;
 import java.io.IOException;
 import java.util.Collection;
 import javax.servlet.ServletException;
@@ -59,7 +60,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         }
  
         if (isUser) {
-            return "/placeOrder";
+            return RestURIConstant.ORDER_FLOW_INIT;
         } else if (isAdmin) {
             return "/secure";
         } else {

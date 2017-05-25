@@ -8,6 +8,8 @@ package edu.mum.coffee.controller;
 import edu.mum.coffee.domain.Product;
 import edu.mum.coffee.domain.ProductType;
 import edu.mum.coffee.service.ProductService;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,4 +71,7 @@ public class ProductRestController {
     public ResponseEntity findProduct(@PathVariable int id){
         return new ResponseEntity(productServices.getProduct(id),HttpStatus.OK);
     }
+    
+    
+
 }

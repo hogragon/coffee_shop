@@ -1,10 +1,14 @@
 package edu.mum.coffee.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.mum.coffee.config.CommonConstant;
 import edu.mum.coffee.domain.Person;
 import edu.mum.coffee.domain.Product;
 import edu.mum.coffee.domain.ProductType;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -12,15 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +34,7 @@ public class HomeController {
         @Autowired
         private SecurityShop securityShopService;
         
-        private final String WEB_SERVICE_URL = "http://localhost:8080";
+        private final String WEB_SERVICE_URL = CommonConstant.WEB_SERVICE_URL;
     
 	@GetMapping({"/", "/index", "/home"})
 	public String homePage() {
@@ -76,17 +74,39 @@ public class HomeController {
         }
         
         @PostMapping("/createNewUser")
-	public String createProduct(@RequestParam("password") String password,HttpEntity<String> requestEntity) {
+	public String createProduct(@RequestParam("password") String password,HttpEntity<String> requestEntity,Model model) {
             RestTemplate restTemplate = new RestTemplate();
+            
+            //Save user data into DB
             Person p = restTemplate.postForObject(WEB_SERVICE_URL+RestURIConstant.PERSON_RIGISTER, requestEntity,Person.class);
+            
+            //Register new user
             securityShopService.RegisterNewCustomer(p, password);
-            return "redirect:/placeOrder";
+            
+            //Put required data into model
+            model.addAttribute("customer", p);
+            return "forward:"+RestURIConstant.ORDER_FLOW_INIT;
 	}
         
-        @RequestMapping("/placeOrder")
-        public String placeOrder(){
-            return "createOrder";
-        }
+//        @ModelAttribute("productList")
+//        public Map<Integer,String> productList() throws IOException{
+//            RestTemplate restTemplate = new RestTemplate();
+//            String result = restTemplate.getForObject(WEB_SERVICE_URL+RestURIConstant.PRODUCT_LIST, String.class);
+//            ObjectMapper mapper = new ObjectMapper();
+//            List<Product> products = mapper.readValue(result, mapper.getTypeFactory().constructCollectionType(List.class, Product.class));
+//
+//            Map<Integer,String> mapType = new HashMap<>();
+//
+//            products.forEach((Product t) -> {
+//                mapType.put(t.getId(), t.getProductName());
+//            });            
+//            return mapType;
+//        }
+        
+//        @RequestMapping("/placeOrder")
+//        public String placeOrder(){
+//            return "createOrder";
+//        }
         
         //This method received post request and forward it to REST
         //after receiving the result from REST, it will redirect to a web page
@@ -124,6 +144,8 @@ public class HomeController {
             }            
             return mapType;
 	}
+        
+        
         
         @GetMapping("/allProduct")
 	public String productPage(Model model) throws IOException {

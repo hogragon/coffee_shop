@@ -22,14 +22,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         webSecurity
             .ignoring()
                 // All of Spring Security will ignore the requests
-                .antMatchers("/person/public/**","/product/public/**");
+                .antMatchers("/person/public/**","/product/public/**","/order/public/**");
                 
     }
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
         http            
             .authorizeRequests()
-                .antMatchers("/", "/home", "/index","/registerUser","/createNewUser").permitAll()
+                .antMatchers("/", "/home", "/index","/registerUser","/createNewUser","/orderflow/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
