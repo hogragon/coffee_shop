@@ -16,6 +16,7 @@
     <a href="<c:url value="/allPeople" />"> List People </a><br>
     <a href="<c:url value="/addProduct" />"> Add Product </a><br>
     <a href="<c:url value="/allProduct" />"> List Product </a><br>
+    <a href="<c:url value="/allOrder" />"> List Order </a><br>
     <a href="<c:url value="/logout" />"> Now logout </a>
 
 </body>

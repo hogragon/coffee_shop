@@ -11,6 +11,7 @@ package edu.mum.coffee.controller;
  */
 public class RestURIConstant {
     public static final String ORDER_CREATE =  "/orderflow/create";
+    public static final String ORDER_LIST =  "/order/public/all";
     public static final String ORDER_UPDATE =  "/orderflow/update";
     public static final String ORDER_FLOW_INIT =  "/orderflow/initOrder";
     public static final String ORDER_FLOW_NEXT_ORDERLINE =  "/orderflow/addNextOrderline";

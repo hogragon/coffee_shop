@@ -129,4 +129,30 @@ public class OrderRestController {
         orderService.delete(order);
         return new ResponseEntity(order.getId(),HttpStatus.OK);
     }
+    
+    @RequestMapping(RestURIConstant.ORDER_LIST)
+    public ResponseEntity allOrders(){
+        List<Order> orders = orderService.findAll();
+        List<OrderSummary> list = new ArrayList<>();
+        
+        for(Order order:orders){
+            OrderSummary os = new OrderSummary();
+            os.setId(order.getId());
+            os.setOrderDate(order.getOrderDate());
+            os.getCustomer().setEmail(order.getPerson().getEmail());
+            os.getCustomer().setId((int) order.getPerson().getId());
+            os.setTotalAmount(order.getTotalAmount());
+
+            for(Orderline l:order.getOrderLines()){
+                OrderLineItem line = new OrderLineItem();
+                line.setProductName(l.getProduct().getProductName());
+                line.setQuantity(l.getQuantity());
+                line.setSubTotal(l.getSubtotal());
+                os.getOrderlines().add(line);
+            }
+            
+            list.add(os);
+        }        
+        return new ResponseEntity(list,HttpStatus.OK);
+    }
 }

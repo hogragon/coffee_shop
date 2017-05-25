@@ -117,4 +117,14 @@ public class OrderController {
         });            
         return mapType;
     }
+    
+    @RequestMapping("/allOrder")
+    public String orderPage(Model model) throws IOException{
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(CommonConstant.WEB_SERVICE_URL+RestURIConstant.ORDER_LIST, String.class);
+        ObjectMapper mapper = new ObjectMapper();
+        List<OrderSummary> orders = mapper.readValue(result, mapper.getTypeFactory().constructCollectionType(List.class, OrderSummary.class));
+        model.addAttribute("orders", orders);
+        return "listOrder";
+    }
 }
