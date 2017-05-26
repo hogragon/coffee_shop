@@ -75,7 +75,7 @@ and open the template in the editor.
                     </c:forEach>
                 </table>
                 <h3>Total: ${order.totalAmount}</h3>
-                <a href="#" onClick="cancelOrder();"> Cancel Order </a><br>
+                <!--<a href="#" onClick="cancelOrder();"> Cancel Order </a><br>-->
                 </c:if>
                
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
